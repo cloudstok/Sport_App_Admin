@@ -3,10 +3,7 @@ dotenv.config();
 
 let SERVER_ENV = verifyenv("SERVER_ENV") || "dev";
 let SERVER_PORT = Number(verifyenv("SERVER_PORT")) || 8080;
-let DB_HOST = verifyenv("DB_HOST") || "";
-let DB_USER = verifyenv("DB_USER") || "";
-let DB_PASSWORD = verifyenv("DB_PASSWORD") || "";
-let DB_NAME = verifyenv("DB_NAME") || "";
+let URL = verifyenv("DB_URL")|| "";
 let JWT_SECRET_KEY = verifyenv("JWT_SECRET_KEY") || "";
 let JWT_EXPIRATION_TIME = verifyenv("JWT_EXPIRATION_TIME") || "";
 let AWS_S3_BUCKET_NAME = verifyenv("AWS_S3_BUCKET_NAME") || "";
@@ -26,19 +23,11 @@ function verifyenv(env_key) {
 export const appConfig = {
   server_env: SERVER_ENV, //['dev','uat']sr
   ver: '0.0.1',
+  path : '/admin/v1',
   server: {
     port: SERVER_PORT,
   },
-  db: {
-    host: DB_HOST,
-    user: DB_USER,
-    password: DB_PASSWORD,
-    database: DB_NAME,
-    waitForConnections: true,
-    connectionLimit: 100,
-    queueLimit: 0,
-    multipleStatements:true
-  },
+  url : URL,
   jwt: {
     jwtSecretKey: JWT_SECRET_KEY,
     jwtExpiry: JWT_EXPIRATION_TIME

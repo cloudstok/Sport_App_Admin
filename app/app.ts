@@ -17,23 +17,25 @@ class App {
         });
 
         const appRoutes = new AppRoutes();
-        let routeList = [];
-        appRoutes.AppPostRoutes.forEach(element => routeList.push(element.path));
-        appRoutes.AppGetRoutes.forEach(element => routeList.push(element.path));
-        appRoutes.AppUpdateRoutes.forEach(element => routeList.push(element.path));
-        appRoutes.AppDeleteRoutes.forEach(element => routeList.push(element.path));
-
         for (var getRoute = 0; getRoute < appRoutes.AppGetRoutes.length; getRoute++) {
-            this.app.get(appRoutes.AppGetRoutes[getRoute].path, [appRoutes.AppGetRoutes[getRoute].component]);
+            let getPath = appRoutes.AppGetRoutes[getRoute].path
+            getPath = getPath !== "*" ? appConfig.path + getPath : getPath
+            this.app.get(getPath, [appRoutes.AppGetRoutes[getRoute].component]);
         }
         for (var postRoute = 0; postRoute < appRoutes.AppPostRoutes.length; postRoute++) {
-            this.app.post(appRoutes.AppPostRoutes[postRoute].path, [appRoutes.AppPostRoutes[postRoute].component]);
+            let postPath = appRoutes.AppPostRoutes[postRoute].path
+            postPath = postPath !== '*' ? appConfig.path + postPath : postPath 
+            this.app.post( postPath, [appRoutes.AppPostRoutes[postRoute].component]);          
         }
         for (var putRoute = 0; putRoute < appRoutes.AppUpdateRoutes.length; putRoute++) {
-            this.app.put(appRoutes.AppUpdateRoutes[putRoute].path, [appRoutes.AppUpdateRoutes[putRoute].component]);
+            let putPath = appRoutes.AppUpdateRoutes[putRoute].path 
+            putPath = putPath !== "*" ? appConfig.path + putPath : putPath
+            this.app.put(putPath, [appRoutes.AppUpdateRoutes[putRoute].component])
         }
         for (var delRoute = 0; delRoute < appRoutes.AppDeleteRoutes.length; delRoute++) {
-            this.app.delete(appRoutes.AppDeleteRoutes[delRoute].path, [appRoutes.AppDeleteRoutes[delRoute].component]);
+            let delPath = appRoutes.AppDeleteRoutes[delRoute].path
+            delPath = delPath  !== "*" ? appConfig.path + delPath : delPath
+            this.app.delete(delPath, [appRoutes.AppDeleteRoutes[delRoute].component])
         }
     }
 
