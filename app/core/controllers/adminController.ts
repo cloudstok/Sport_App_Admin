@@ -2,13 +2,13 @@ import { connection } from "../../config/dbConf";
 import { ResponseInterceptor } from "../../core/utilities/response-interceptor";
 import { EncryptionDecryption } from "../bcrypt/bcrypt";
 import { tokenController } from "../../core/jwt/jsonwebtoken";
-export class user extends ResponseInterceptor {
+export class admin extends ResponseInterceptor {
     public connection: connection
-    SQL_CHECK_USER: string = "select * from signup where user_id = ? limit 1";
-    SQL_INSERT_USER: string = "insert into signup(user_id, user_password) values (?,?)";
-    SQL_ALL_USER: string = "select * from signup";
-    SQL_UPDATE_USER: string = "update signup set user_id = ?, user_password= ? where sign_up_id = ? limit 1 ";
-    SQL_DELETE_USER: string = "update signup set is_deleted = 1 where sign_up_id = ? limit 1 ";
+    SQL_CHECK_ADMIN: string = "select * from admin_profile where admin_id = ? limit 1";
+    SQL_INSERT_ADMIN: string = "insert into admin_profile(admin_id, password) values (?,?)";
+    SQL_ALL_ADMIN: string = "select * from admin_profile";
+    SQL_UPDATE_ADMIN: string = "update admin_profile set admin_id = ?, password= ? where a_id = ? limit 1 ";
+    SQL_DELETE_ADMIN: string = "update admin_profile set is_deleted = 1 where a_id = ? limit 1 ";
     encryptionDecryption : EncryptionDecryption;
     tokenController : tokenController;
     constructor() {
@@ -19,16 +19,17 @@ export class user extends ResponseInterceptor {
     }
     async register(req: any, res: any) {
         try {
-            const { user_id, user_password } = req.body
-            const [user]: any = await this.connection.write.query(this.SQL_CHECK_USER, [user_id]);
+            const { admin_id, password } = req.body
+            const [user]: any = await this.connection.write.query(this.SQL_CHECK_ADMIN, [admin_id]);
             if (user.length > 0) {
                 return this.sendBadRequest(res,  "User Already Exist" , this.BAD_REQUEST)
             }
-            const hash = await this.encryptionDecryption.Encryption(user_password)
-            await this.connection.write.query(this.SQL_INSERT_USER, [user_id, hash]);
-            return this.sendSuccess(res, { message: "User Insert Successfully" })
+            const hash = await this.encryptionDecryption.Encryption(password)
+            await this.connection.write.query(this.SQL_INSERT_ADMIN, [admin_id, hash]);
+            return this.sendSuccess(res, { message: "admin Insert Successfully" })
         }
         catch (err) {
+            console.log(err)
             this.sendBadRequest(res, `${err}` , this.BAD_REQUEST)
         }
 
@@ -36,12 +37,12 @@ export class user extends ResponseInterceptor {
 
     async login(req: any, res: any) {
         try {
-            const { user_id, user_password } = req.body
-            const [user]: any = await this.connection.write.query(this.SQL_CHECK_USER, [user_id]);
+            const { admin_id, password } = req.body
+            const [user]: any = await this.connection.write.query(this.SQL_CHECK_ADMIN, [admin_id]);
             if (user.length === 0) {
                 return this.sendBadRequest(res, "You are not register" , this.BAD_REQUEST)
             }
-            const comparePassword = await this.encryptionDecryption.Decryption(user_password , user[0].user_password)
+            const comparePassword = await this.encryptionDecryption.Decryption(password , user[0].password)
             if (!comparePassword) {
                 return this.sendBadRequest(res,  "Wrong Password", this.BAD_REQUEST,)
             }
@@ -49,12 +50,13 @@ export class user extends ResponseInterceptor {
             return this.sendSuccess(res, { message: "Login Successfully", token: token })
         }
         catch (err) {
+            console.log(err)
             this.sendBadRequest(res, `${err}` , this.BAD_REQUEST)
         }
     }
-   async findAllUsers(req : any, res : any){
+   async findAllAdmin(req : any, res : any){
     try{
-        const [user]: any = await this.connection.write.query(this.SQL_ALL_USER);
+        const [user]: any = await this.connection.write.query(this.SQL_ALL_ADMIN);
         return this.sendSuccess(res, { message: "User Insert Successfully", data : user })
     }
     catch(err){
@@ -62,11 +64,11 @@ export class user extends ResponseInterceptor {
     }
    }
 
-   async updateAllUser(req : any, res : any){
+   async updateAllAdmin(req : any, res : any){
     try{
-        const { user_id, user_password } = req.body
-        let userId = req.params.sign_up_id
-        const [user]: any = await this.connection.write.query(this.SQL_UPDATE_USER, [user_id, user_password, userId]);
+        const { admin_id, password } = req.body
+        let a_Id = req.params.a_id
+        const [user]: any = await this.connection.write.query(this.SQL_UPDATE_ADMIN, [admin_id, password, a_Id]);
         return this.sendSuccess(res, { message: "User updated Successfully", data : user })
 
     }
@@ -75,9 +77,9 @@ export class user extends ResponseInterceptor {
     }
    }
 
-   async DeleteUser(req : any, res : any){
+   async DeleteAdmin(req : any, res : any){
     try{
-        const [user]: any = await this.connection.write.query(this.SQL_DELETE_USER, [req.params.sign_up_id]);
+        const [user]: any = await this.connection.write.query(this.SQL_DELETE_ADMIN, [req.params.a_id]);
         return this.sendSuccess(res, { message: "User delete Successfully", data : user })
     }
     catch(err){
@@ -86,7 +88,7 @@ export class user extends ResponseInterceptor {
    }
    async findById(req : any, res : any){
     try{
-        const [user]: any = await this.connection.write.query(this.SQL_CHECK_USER, [req.params.sign_up_id]);
+        const [user]: any = await this.connection.write.query(this.SQL_CHECK_ADMIN, [req.params.a_id]);
         return this.sendSuccess(res, {  data : user })
     }
     catch(err){

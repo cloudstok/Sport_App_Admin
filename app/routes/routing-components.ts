@@ -1,19 +1,19 @@
 import { ResponseInterceptor } from "../core/utilities/response-interceptor";
 import { TestController } from "../core/controllers/test.controller";
-import { user } from "../core/controllers/userController";
+import { admin } from "../core/controllers/adminController";
 import { ThemeController } from "../core/controllers/themes.controller"
 
 export class RoutingComponents {
   responseInterceptor: ResponseInterceptor;
   test: TestController
-  user: user
+  admin: admin
   theme: ThemeController
   
 
   constructor() {
     this.responseInterceptor = new ResponseInterceptor();
     this.test = new TestController();
-    this.user = new user();
+    this.admin = new admin();
     this.theme = new ThemeController();
   }
 
@@ -27,22 +27,22 @@ export class RoutingComponents {
     this.test.test(req, res, )
   }
   register(req : any ,res : any){
-    this.user.register(req, res)
+    this.admin.register(req, res)
   }
   login(req : any, res : any){
-    this.user.login(req, res)
+    this.admin.login(req, res)
   }
-  findAllUSer(req: any, res : any){
-    this.user.findAllUsers(req, res)
+  findAllAdmin(req: any, res : any){
+    this.admin.findAllAdmin(req, res)
   }
-  updateUser(req:any, res :any){
-    this.user.updateAllUser(req, res)
+  updateAdmin(req:any, res :any){
+    this.admin.updateAllAdmin(req, res)
   }
-  deleteUser(req:any, res :any){
-    this.user.DeleteUser(req, res)
+  deleteAdmin(req:any, res :any){
+    this.admin.DeleteAdmin(req, res)
   }
   userFindById(req:any, res :any){
-    this.user.findById(req, res)
+    this.admin.findById(req, res)
   }
 
   // <-----------------for themes------------------->

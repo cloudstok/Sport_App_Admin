@@ -28,14 +28,14 @@ export class AppRoutes {
         ]
       },
       {
-        path: "/register",
+        path: "/admin/register",
         component: [
-          this.apiValidation.validate(register),
+          // this.apiValidation.validate(register),
           routingComponents.register.bind(routingComponents)
         ]
       },
       {
-        path: "/login",
+        path: "/admin/login",
         component: [
           routingComponents.login.bind(routingComponents)
         ]
@@ -65,13 +65,13 @@ export class AppRoutes {
     this.AppGetRoutes = [
       // 404
       {
-        path: "/alluser",
+        path: "/admin/alluser",
         component: [
-          routingComponents.findAllUSer.bind(routingComponents)
+          routingComponents.findAllAdmin.bind(routingComponents)
         ]
       },
       {
-        path: "/userfindbyid/:sign_up_id",
+        path: "/admin/userfindbyid/:a_id",
         component: [
           routingComponents.userFindById.bind(routingComponents)
         ]
@@ -93,15 +93,15 @@ export class AppRoutes {
     this.AppUpdateRoutes = [
       // 404
       {
-        path: "/updateuser/:sign_up_id",
+        path: "/admin/updateuser/:a_id",
         component: [
-          routingComponents.updateUser.bind(routingComponents)
+          routingComponents.updateAdmin.bind(routingComponents)
         ]
       },
       {
-        path: "/deleteuser/:sign_up_id",
+        path: "/admin/deleteuser/:a_id",
         component: [
-          routingComponents.deleteUser.bind(routingComponents)
+          routingComponents.deleteAdmin.bind(routingComponents)
         ]
       },
       {
