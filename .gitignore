@@ -1,0 +1,16 @@
+# package directories
+node_modules
+jspm_packages
+package-lock.json
+
+# Serverless directories
+.serverless
+.vscode/settings.json
+logs/
+logs
+logs/all_events.logs
+logs/all_events.log
+./logs
+dist
+.env
+Tooling
