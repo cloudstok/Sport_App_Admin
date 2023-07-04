@@ -1,7 +1,7 @@
 import {createPool} from 'mysql2/promise';
 import { appConfig } from './appConf';
   export class connection{
-    public data: {} = appConfig.db
+    public data: string = appConfig.uri
   constructor(){
 
   }

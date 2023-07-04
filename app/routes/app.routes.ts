@@ -40,13 +40,10 @@ export class AppRoutes {
           routingComponents.login.bind(routingComponents)
         ]
       },
-      
       {
-        path: "/addtheme",
-        component : [
-          this.tokenController.verifyToken,
-          this.upload.array('docs' , 3),
-          routingComponents.addThemes.bind(routingComponents)
+        path: "/addReel",
+        component: [
+          routingComponents.addReel.bind(routingComponents)
         ]
       },
 
@@ -71,15 +68,15 @@ export class AppRoutes {
         ]
       },
       {
-        path: "/admin/userfindbyid/:a_id",
+        path: "/admin/findbyid/:a_id",
         component: [
           routingComponents.userFindById.bind(routingComponents)
         ]
       },
       {
-        path: "/getallthemes",
-        component: [
-          routingComponents.getAllThemes.bind(routingComponents)
+        path: "/showReel",
+        component : [
+          routingComponents.showReel.bind(routingComponents)
         ]
       },
       {
@@ -105,12 +102,6 @@ export class AppRoutes {
         ]
       },
       {
-        path: "/updatetheme/:theme_id",
-        component: [
-          routingComponents.updateTheme.bind(routingComponents)
-        ]
-      },
-      {
         path: "*",
         component: [
           routingComponents.pageNotFound.bind(routingComponents)
@@ -121,12 +112,6 @@ export class AppRoutes {
     // delete requests
     this.AppDeleteRoutes = [
       // 404
-      {
-        path: "/deletethemes",
-        component: [
-          routingComponents.deleteThemes.bind(routingComponents)
-        ]
-      },
       {
         path: "*",
         component: [
