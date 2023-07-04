@@ -1,20 +1,20 @@
 import { ResponseInterceptor } from "../core/utilities/response-interceptor";
 import { TestController } from "../core/controllers/test.controller";
 import { admin } from "../core/controllers/adminController";
-import { ThemeController } from "../core/controllers/themes.controller"
+import { reelController } from "../core/controllers/reelController";
 
 export class RoutingComponents {
   responseInterceptor: ResponseInterceptor;
   test: TestController
   admin: admin
-  theme: ThemeController
+  reels: reelController
   
 
   constructor() {
     this.responseInterceptor = new ResponseInterceptor();
     this.test = new TestController();
     this.admin = new admin();
-    this.theme = new ThemeController();
+    this.reels = new reelController();
   }
 
   /**
@@ -44,19 +44,12 @@ export class RoutingComponents {
   userFindById(req:any, res :any){
     this.admin.findById(req, res)
   }
+  //<---------------reels---------------->
 
-  // <-----------------for themes------------------->
-addThemes(req:any, res: any){
-  this.theme.addThemes(req,res)
-}
-
-getAllThemes(req: any, res: any){
-  this.theme.showThemes(req, res)
-}
-updateTheme(req: any, res: any){
-  this.theme.updateThemes(req ,res)
-}  
-deleteThemes(req:any, res: any){
-  this.theme.deleteThemes(req,res)
-}
+  addReel(req : any, res: any){
+    this.reels.addReel(req, res)
+  }
+  showReel(req : any , res : any){
+    this.reels.showReel(req,res)
+  }
 }

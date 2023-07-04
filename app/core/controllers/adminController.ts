@@ -57,7 +57,7 @@ export class admin extends ResponseInterceptor {
    async findAllAdmin(req : any, res : any){
     try{
         const [user]: any = await this.connection.write.query(this.SQL_ALL_ADMIN);
-        return this.sendSuccess(res, { message: "User Insert Successfully", data : user })
+        return this.sendSuccess(res, { data : user })
     }
     catch(err){
         this.sendBadRequest(res, `${err}` , this.BAD_REQUEST)
@@ -83,6 +83,7 @@ export class admin extends ResponseInterceptor {
         return this.sendSuccess(res, { message: "User delete Successfully", data : user })
     }
     catch(err){
+        console.log(err)
         this.sendBadRequest(res, `${err}` , this.BAD_REQUEST)
     }
    }
