@@ -10,7 +10,7 @@ export class News extends ResponseInterceptor{
         this.connection = new connection();
         this.uploads3 = new uploads3()
     }
-    async getNews(req ,res) {
+    async getNews(req: any ,res: any ) {
         try{
             const [news] = await this.connection.write.query(SQL_SHOW_NEWS);
             return this.sendSuccess(res, {data: news})
@@ -19,7 +19,7 @@ export class News extends ResponseInterceptor{
         }
     }
 
-    async getNewsById(req, res){
+    async getNewsById(req: any, res: any){
         try{
             const [news] = await this.connection.write.query(SQL_SHOW_NEWS_BY_ID, [req.params.news_id]);
             this.sendSuccess(res, {data: news})
@@ -28,12 +28,11 @@ export class News extends ResponseInterceptor{
         }
     }
 
-    async insertNews(req ,res){
+    async insertNews(req: any ,res: any){
         try{
             console.log(req.files)
             if(req.files.length > 0){
-             req.body.cover_image = await  this.uploads3.uploadImage(req.files)
-            }
+             req.body.cover_image = await  this.uploads3.uploadImage(req.files)}
             const {heading, sub_heading, cover_image, created_by, url, content} = req.body;
           await this.connection.write.query(SQL_INSERT_NEWS, [heading, sub_heading, cover_image.Location, created_by, url, content]);
             this.sendSuccess(res, { msg: "News added successfully"})
@@ -43,7 +42,7 @@ export class News extends ResponseInterceptor{
         }
     }
 
-    async updateNews(req, res){
+    async updateNews(req: any, res: any){
         try{
             const reqBody = req.body;
             const [news] = await this.connection.write.query(SQL_UPDATE_NEWS, [reqBody, req.params.news_id]);
@@ -53,7 +52,7 @@ export class News extends ResponseInterceptor{
         }
     }   
 
-    async deleteNews(req, res){
+    async deleteNews(req: any, res: any){
         try{
             const [news]: any = await this.connection.write.query(SQL_DELETE_NEWS, [req.params.news_id]);
             return this.sendSuccess(res, { message: "News deleted Successfully", data : news })
