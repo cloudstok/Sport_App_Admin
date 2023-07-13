@@ -44,6 +44,7 @@ export class AppRoutes {
       {
         path: "/addReel",
         component: [
+          this.upload.array("docs" , 1),
           routingComponents.addReel.bind(routingComponents)
         ]
       },
