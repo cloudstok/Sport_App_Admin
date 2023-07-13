@@ -7,6 +7,7 @@ let mimetype = file.mimetype == "image/png" ||
                file.mimetype == "image/jpg" || 
                file.mimetype =='application/pdf' ||
                file.mimetype == "image/jpeg" ||
+               file.mimetype == "image/webp" ||
                file.mimetype == "video/mp4";
         if(!mimetype){
             cb(null, false)

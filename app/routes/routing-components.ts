@@ -2,12 +2,15 @@ import { ResponseInterceptor } from "../core/utilities/response-interceptor";
 import { TestController } from "../core/controllers/test.controller";
 import { admin } from "../core/controllers/adminController";
 import { reelController } from "../core/controllers/reelController";
+import {News} from "../core/controllers/newsController";
 
 export class RoutingComponents {
   responseInterceptor: ResponseInterceptor;
   test: TestController
   admin: admin
   reels: reelController
+  news : News
+  
   
 
   constructor() {
@@ -15,6 +18,7 @@ export class RoutingComponents {
     this.test = new TestController();
     this.admin = new admin();
     this.reels = new reelController();
+    this.news = new News();
   }
 
   /**
@@ -52,4 +56,25 @@ export class RoutingComponents {
   showReel(req : any , res : any){
     this.reels.showReel(req,res)
   }
-}
+
+  //<--------------News-------------->
+  getNews(req : any, res: any){
+    this.news.getNews(req,res)
+  }
+
+  getNewsById(req:any, res:any){
+    this.news.getNewsById(req,res)
+  }
+
+  insertNews(req:any, res:any){
+    this.news.insertNews(req,res)
+  }
+
+  updateNews(req:any, res: any){
+    this.news,this.updateNews(req,res)
+  }
+
+  deleteNews(req:any, res:any){
+    this.news.deleteNews(req, res)
+  }
+  }

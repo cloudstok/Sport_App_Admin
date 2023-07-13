@@ -1,4 +1,4 @@
- import { register } from "../core/validation/schema";
+ import { findbyid, register } from "../core/validation/schema";
 import { RoutingComponents } from "./routing-components";
 import { apiValidation } from "../core/validation/apiValidation";
 import { tokenController } from "../core/jwt/jsonwebtoken";
@@ -30,13 +30,14 @@ export class AppRoutes {
       {
         path: "/register",
         component: [
-          // this.apiValidation.validate(register),
+          this.apiValidation.validate(register),
           routingComponents.register.bind(routingComponents)
         ]
       },
       {
         path: "/login",
         component: [
+          this.apiValidation.validate(register),
           routingComponents.login.bind(routingComponents)
         ]
       },
@@ -45,6 +46,14 @@ export class AppRoutes {
         component: [
           routingComponents.addReel.bind(routingComponents)
         ]
+      },
+      {
+        path: "/insertNews",
+        component: [
+          this.upload.array("docs" , 1),
+          routingComponents.insertNews.bind(routingComponents)
+        ]
+
       },
 
       // 404
@@ -70,6 +79,7 @@ export class AppRoutes {
       {
         path: "/findbyid/:a_id",
         component: [
+          this.apiValidation.validateParams(findbyid),
           routingComponents.userFindById.bind(routingComponents)
         ]
       },
@@ -79,6 +89,18 @@ export class AppRoutes {
           routingComponents.showReel.bind(routingComponents)
         ]
       },
+      {
+          path: "/getNews",
+          component: [
+            routingComponents.getNews.bind(routingComponents)
+          ]
+      },
+      {
+        path: "/getNewsById",
+        component: [
+          routingComponents.getNewsById.bind(routingComponents)
+        ]
+    },
       {
         path: "*",
         component: [
@@ -102,16 +124,29 @@ export class AppRoutes {
         ]
       },
       {
+        path: "/updateNews",
+        component: [
+          routingComponents.updateNews.bind(routingComponents)
+        ]
+      },
+      {
         path: "*",
         component: [
           routingComponents.pageNotFound.bind(routingComponents)
         ]
       },
+      
     ];
 
     // delete requests
     this.AppDeleteRoutes = [
       // 404
+      {
+        path: "/deleteNews",
+        component: [
+          routingComponents.deleteNews.bind(routingComponents)
+        ]
+      },
       {
         path: "*",
         component: [
