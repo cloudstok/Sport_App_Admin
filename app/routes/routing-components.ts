@@ -3,6 +3,7 @@ import { TestController } from "../core/controllers/test.controller";
 import { admin } from "../core/controllers/adminController";
 import { reelController } from "../core/controllers/reelController";
 import {News} from "../core/controllers/newsController";
+import { SeriesController } from "../core/controllers/seriesController";
 
 export class RoutingComponents {
   responseInterceptor: ResponseInterceptor;
@@ -10,6 +11,7 @@ export class RoutingComponents {
   admin: admin
   reels: reelController
   news : News
+  seriesController : SeriesController
   
   
 
@@ -19,6 +21,7 @@ export class RoutingComponents {
     this.admin = new admin();
     this.reels = new reelController();
     this.news = new News();
+    this.seriesController = new SeriesController();
   }
 
   /**
@@ -77,4 +80,10 @@ export class RoutingComponents {
   deleteNews(req:any, res:any){
     this.news.deleteNews(req, res)
   }
+
+// <------------------Series------------------->
+
+addSeries(req:any, res:any){
+  this.seriesController.insertSeries(req,res)
+}
   }

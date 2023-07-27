@@ -56,6 +56,13 @@ export class AppRoutes {
         ]
 
       },
+      {
+        path: "/insertSeries",
+        component: [
+          routingComponents.addSeries.bind(routingComponents)
+        ]
+
+      },
 
       // 404
       {
