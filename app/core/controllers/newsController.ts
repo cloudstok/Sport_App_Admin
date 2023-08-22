@@ -34,7 +34,7 @@ export class News extends ResponseInterceptor{
             if(req.files.length > 0){
              req.body.cover_image = await  this.uploads3.uploadImage(req.files)}
             const {heading, sub_heading, cover_image, created_by, url, content} = req.body;
-          await this.connection.write.query(SQL_INSERT_NEWS, [heading, sub_heading, cover_image.Location, created_by, url, content]);
+          await this.connection.write.query(SQL_INSERT_NEWS, [heading, sub_heading, cover_image, created_by, url, content]);
             this.sendSuccess(res, { msg: "News added successfully"})
         }catch(err){
             console.log(err)

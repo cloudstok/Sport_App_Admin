@@ -4,6 +4,8 @@ import { admin } from "../core/controllers/adminController";
 import { reelController } from "../core/controllers/reelController";
 import {News} from "../core/controllers/newsController";
 import { SeriesController } from "../core/controllers/seriesController";
+import { teamController } from "../core/controllers/teamController";
+import { playerController } from "../core/controllers/playerController";
 
 export class RoutingComponents {
   responseInterceptor: ResponseInterceptor;
@@ -12,6 +14,8 @@ export class RoutingComponents {
   reels: reelController
   news : News
   seriesController : SeriesController
+  teamController : teamController
+  playerController : playerController
   
   
 
@@ -22,6 +26,8 @@ export class RoutingComponents {
     this.reels = new reelController();
     this.news = new News();
     this.seriesController = new SeriesController();
+    this.teamController = new teamController();
+    this.playerController = new playerController();
   }
 
   /**
@@ -84,6 +90,19 @@ export class RoutingComponents {
 // <------------------Series------------------->
 
 addSeries(req:any, res:any){
-  this.seriesController.insertSeries(req,res)
+  this.seriesController.addSeries(req,res)
+}
+
+
+
+//<-----------------Teams------------------------>
+
+addTeam(req:any, res: any){
+  this.teamController.addTeam(req,res)
+}
+
+//<-----------------Player------------------->
+addPlayer(req:any, res:any){
+  this.playerController.addPlayer(req,res)
 }
   }

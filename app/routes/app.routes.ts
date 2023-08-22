@@ -57,12 +57,13 @@ export class AppRoutes {
 
       },
       {
-        path: "/insertSeries",
+        path: "/addSeries",
         component: [
           routingComponents.addSeries.bind(routingComponents)
         ]
 
       },
+     
 
       // 404
       {
@@ -109,6 +110,20 @@ export class AppRoutes {
           routingComponents.getNewsById.bind(routingComponents)
         ]
     },
+    {
+      path: "/addTeam",
+      component: [
+        routingComponents.addTeam.bind(routingComponents)
+      ]
+  },
+  {
+    path: "/addPlayer",
+    component: [
+      routingComponents.addPlayer.bind(routingComponents)
+    ]
+},
+    
+
       {
         path: "*",
         component: [

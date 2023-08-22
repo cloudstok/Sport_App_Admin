@@ -4,20 +4,15 @@ export class thirdPartyApi {
     async series_list() {
         const options = {
             method: 'GET',
-            url: 'https://cricbuzz-cricket.p.rapidapi.com/series/v1/international',
-            headers: {
-              'X-RapidAPI-Key': 'bd8f0ef610msh6012d41a3d87a3dp107e51jsnb52344cd4286',
-              'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
-            }
-          };
-          
-          try {
-              const response = await axios.request(options);
-              console.log(response.data);
-              return response.data
-          } catch (error) {
-              console.error(error);
-          }
+            url: 'http://localhost:3000/cricbuzz/series',
+        };
+
+        try {
+            const response = await axios.request(options);
+            return response.data
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     async match_list() {
@@ -26,15 +21,40 @@ export class thirdPartyApi {
             return match_list
         }
         catch (err) {
-
+            console.log(err);
         }
-        
+
     }
 
+    async team() {
+        const options = {
+            method: 'GET',
+            url: `http://localhost:3000/cricbuzz/getteams`,
+            timeout: 30000
+        };
 
+        try {
+            const response = await axios.request(options);
+            return response.data
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
+    async player() {
+        const options = {
+            method: 'GET',
+            url: `http://localhost:3000/player/1413/virat-kohli`,
+            timeout: 30000
+        };
 
-
+        try {
+            const response = await axios.request(options);
+            return response.data
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
 

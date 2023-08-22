@@ -10,17 +10,17 @@ export class SeriesController extends ResponseInterceptor {
         this.thirdPartyApi = new thirdPartyApi()
         this.connection = new connection()
     }
-    async insertSeries(req: any, res: any) {
+    async addSeries(req: any, res: any) {
         try {
             let seriesList = await this.thirdPartyApi.series_list()
-            for (let x of seriesList.seriesMapProto) {
-                for (let y of x.series) {
-                    y.startDt = new Date(parseInt(y.startDt));
-                    y.endDt = new Date(parseInt(y.endDt));
-                    await this.connection.write.query(`insert into series(sport_id, series_name, start_dt, end_dt) values (?,?,?,?)`, [y.id, y.name, y.startDt, y.endDt])
-                }
+               
+            for (let x of seriesList.data) {
+            let data = x.time.split('-')
+                   let a =   [x.seriesId , 4, x.name , new Date( x.year[x.year.length -1] + data[1]) , new Date( x.year[x.year.length -1] + data[1]) ]
+               await this.connection.write.query(`insert  ignore into series(series_id, sport_id, series_name, start_dt, end_dt) values (?,?,?,?,?)`, a)
+             
             }
-            return res.send("okay")
+            return res.send("inserted successfully ")
         }
         catch (err) {
             console.log(err)
