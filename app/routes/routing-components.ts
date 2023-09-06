@@ -7,6 +7,8 @@ import { SeriesController } from "../core/controllers/seriesController";
 import { TeamsController } from "../core/controllers/teamsController";
 import { PlayerController } from "../core/controllers/playerController"
 import { association} from '../core/controllers/association'
+import { teamController } from "../core/controllers/teamController";
+
 export class RoutingComponents {
   responseInterceptor: ResponseInterceptor;
   test: TestController
@@ -17,6 +19,9 @@ export class RoutingComponents {
   teams: TeamsController
   player : PlayerController
   association :association
+  teamController : teamController
+  
+  
 
   constructor() {
     this.responseInterceptor = new ResponseInterceptor();
@@ -28,6 +33,7 @@ export class RoutingComponents {
     this.teams = new TeamsController();
     this.player = new PlayerController();
     this.association = new association()
+    this.teamController = new teamController();
   }
 
   /**
@@ -106,9 +112,18 @@ export class RoutingComponents {
 
 // <------------------Series------------------->
 
-addSeries(req:any, res:any){
-  this.seriesController.insertSeries(req,res)
+
+
+
+
+//<-----------------Teams------------------------>
+
+addTeam(req:any, res: any){
+  this.teamController.addTeam(req,res)
 }
+
+//<-----------------Player------------------->
+
 
   // <----------------Teams-------------------->
 
@@ -117,7 +132,5 @@ addTeams(req: any, res:any){
 }
   // <----------------Players-------------------->
 
-addPlayer(req: any, res:any){
-  this.player.add_players(req, res)
-}
+
   }
