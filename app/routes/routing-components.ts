@@ -4,7 +4,9 @@ import { admin } from "../core/controllers/adminController";
 import { reelController } from "../core/controllers/reelController";
 import {News} from "../core/controllers/newsController";
 import { SeriesController } from "../core/controllers/seriesController";
-
+import { TeamsController } from "../core/controllers/teamsController";
+import { PlayerController } from "../core/controllers/playerController"
+import { association} from '../core/controllers/association'
 export class RoutingComponents {
   responseInterceptor: ResponseInterceptor;
   test: TestController
@@ -12,8 +14,9 @@ export class RoutingComponents {
   reels: reelController
   news : News
   seriesController : SeriesController
-  
-  
+  teams: TeamsController
+  player : PlayerController
+  association :association
 
   constructor() {
     this.responseInterceptor = new ResponseInterceptor();
@@ -22,6 +25,9 @@ export class RoutingComponents {
     this.reels = new reelController();
     this.news = new News();
     this.seriesController = new SeriesController();
+    this.teams = new TeamsController();
+    this.player = new PlayerController();
+    this.association = new association()
   }
 
   /**
@@ -50,6 +56,23 @@ export class RoutingComponents {
   }
   userFindById(req:any, res :any){
     this.admin.findById(req, res)
+  }
+
+  //------------------association -----------------------------------
+  add_association(req :any , res:any){
+    this.association.add_association(req ,res)
+  }
+  add_venues(req :any , res:any){
+    this.association.add_venues(req ,res)
+  }
+  add_countries(req :any , res:any){
+    this.association.add_countries(req ,res)
+  }
+  add_tournaments(req :any , res:any){
+    this.association.add_tournaments(req ,res)
+  }
+  add_matches(req :any , res:any){
+    this.association.add_matches(req ,res)
   }
   //<---------------reels---------------->
 
@@ -85,5 +108,16 @@ export class RoutingComponents {
 
 addSeries(req:any, res:any){
   this.seriesController.insertSeries(req,res)
+}
+
+  // <----------------Teams-------------------->
+
+addTeams(req: any, res:any){
+  this.teams.add_teams(req, res)
+}
+  // <----------------Players-------------------->
+
+addPlayer(req: any, res:any){
+  this.player.add_players(req, res)
 }
   }

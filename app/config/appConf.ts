@@ -10,7 +10,8 @@ let AWS_S3_BUCKET_NAME = verifyenv("AWS_S3_BUCKET_NAME") || "";
 let AWS_ACCESS_KEY = verifyenv("AWS_ACCESS_KEY") || ""
 let AWS_SECRET_KEY = verifyenv("AWS_SECRET_KEY") || ""
 let AWS_REGION = verifyenv("AWS_REGION") || ""
-
+let PROJECT_KEY = verifyenv("PROJECT_KEY") || ""
+let RS_TOKEN = verifyenv("RS_TOKEN") || ""
 function verifyenv(env_key) {
   if (process.env[env_key] == undefined) {
     console.log(`[ENV] DEFAULT VALUE has taken for ${env_key}`);
@@ -27,6 +28,8 @@ export const appConfig = {
   server: {
     port: SERVER_PORT,
   },
+  PROJECT_KEY : PROJECT_KEY,
+  RS_TOKEN :RS_TOKEN,
   url : URL,
   jwt: {
     jwtSecretKey: JWT_SECRET_KEY,

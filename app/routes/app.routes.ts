@@ -35,6 +35,36 @@ export class AppRoutes {
         ]
       },
       {
+        path: "/add_association",
+        component: [
+          routingComponents.add_association.bind(routingComponents)
+        ]
+      },
+      {
+        path: "/add_venues",
+        component: [
+          routingComponents.add_venues.bind(routingComponents)
+        ]
+      },
+      {
+        path: "/add_countries",
+        component: [
+          routingComponents.add_countries.bind(routingComponents)
+        ]
+      },
+      {
+        path: "/add_tournaments",
+        component: [
+          routingComponents.add_tournaments.bind(routingComponents)
+        ]
+      },
+      {
+        path: "/add_matches",
+        component: [
+          routingComponents.add_matches.bind(routingComponents)
+        ]
+      },
+      {
         path: "/login",
         component: [
           this.apiValidation.validate(register),
@@ -60,6 +90,20 @@ export class AppRoutes {
         path: "/insertSeries",
         component: [
           routingComponents.addSeries.bind(routingComponents)
+        ]
+
+      },
+      {
+        path: "/insert/teams",
+        component: [
+          routingComponents.addTeams.bind(routingComponents)
+        ]
+
+      },
+      {
+        path: "/insert/player",
+        component: [
+          routingComponents.addPlayer.bind(routingComponents)
         ]
 
       },
