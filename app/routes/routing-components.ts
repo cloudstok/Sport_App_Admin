@@ -3,11 +3,10 @@ import { TestController } from "../core/controllers/test.controller";
 import { admin } from "../core/controllers/adminController";
 import { reelController } from "../core/controllers/reelController";
 import {News} from "../core/controllers/newsController";
-import { SeriesController } from "../core/controllers/seriesController";
-import { TeamsController } from "../core/controllers/teamsController";
-import { PlayerController } from "../core/controllers/playerController"
-import { association} from '../core/controllers/association'
+import {static_data} from '../core/controllers/Static_Data/static_data'
 import { teamController } from "../core/controllers/teamController";
+import { API_TO_INTEGRATE} from '../core/controllers/API_TO_INTEGRATE/api_to_integrate'
+import { countries } from "../core/controllers/countries/countries";
 
 export class RoutingComponents {
   responseInterceptor: ResponseInterceptor;
@@ -15,12 +14,10 @@ export class RoutingComponents {
   admin: admin
   reels: reelController
   news : News
-  seriesController : SeriesController
-  teams: TeamsController
-  player : PlayerController
-  association :association
+  static_data :static_data
   teamController : teamController
-  
+  API_TO_INTEGRATE :API_TO_INTEGRATE
+  countries : countries
   
 
   constructor() {
@@ -29,11 +26,10 @@ export class RoutingComponents {
     this.admin = new admin();
     this.reels = new reelController();
     this.news = new News();
-    this.seriesController = new SeriesController();
-    this.teams = new TeamsController();
-    this.player = new PlayerController();
-    this.association = new association()
+    this.static_data = new static_data()
     this.teamController = new teamController();
+    this.API_TO_INTEGRATE = new API_TO_INTEGRATE();
+    this.countries = new countries()
   }
 
   /**
@@ -66,19 +62,31 @@ export class RoutingComponents {
 
   //------------------association -----------------------------------
   add_association(req :any , res:any){
-    this.association.add_association(req ,res)
+    this.static_data.add_association(req ,res)
   }
   add_venues(req :any , res:any){
-    this.association.add_venues(req ,res)
+    this.static_data.add_venues(req ,res)
   }
   add_countries(req :any , res:any){
-    this.association.add_countries(req ,res)
+    this.static_data.add_countries(req ,res)
+  }
+  countriesImage(req :any , res:any){
+    this.countries.uploadImage(req ,res)
   }
   add_tournaments(req :any , res:any){
-    this.association.add_tournaments(req ,res)
+    this.API_TO_INTEGRATE.add_tournaments(req ,res)
+  }
+  update_tournament(req :any , res:any){
+    this.API_TO_INTEGRATE.update_tournaments(req ,res)
   }
   add_matches(req :any , res:any){
-    this.association.add_matches(req ,res)
+    this.API_TO_INTEGRATE.add_matches(req ,res)
+  }
+  add_teams(req :any , res:any){
+    this.API_TO_INTEGRATE.add_teams(req ,res)
+  }
+  table(req :any , res:any){
+    this.API_TO_INTEGRATE.table(req ,res)
   }
   //<---------------reels---------------->
 
@@ -119,7 +127,7 @@ export class RoutingComponents {
 //<-----------------Teams------------------------>
 
 addTeam(req:any, res: any){
-  this.teamController.addTeam(req,res)
+  this.teamController.get_team(req,res)
 }
 
 //<-----------------Player------------------->
@@ -127,9 +135,7 @@ addTeam(req:any, res: any){
 
   // <----------------Teams-------------------->
 
-addTeams(req: any, res:any){
-  this.teams.add_teams(req, res)
-}
+
   // <----------------Players-------------------->
 
 

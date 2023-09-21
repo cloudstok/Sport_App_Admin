@@ -59,9 +59,27 @@ export class AppRoutes {
         ]
       },
       {
+        path: "/update_tournament",
+        component: [
+          routingComponents.update_tournament.bind(routingComponents)
+        ]
+      },
+      {
         path: "/add_matches",
         component: [
           routingComponents.add_matches.bind(routingComponents)
+        ]
+      },
+      {
+        path: "/table",
+        component: [
+          routingComponents.table.bind(routingComponents)
+        ]
+      },
+      {
+        path: "/add_teams",
+        component: [
+          routingComponents.add_teams.bind(routingComponents)
         ]
       },
       {
@@ -86,16 +104,14 @@ export class AppRoutes {
         ]
 
       },
-    
       {
-        path: "/insert/teams",
+        path: "/countriesImage",
         component: [
-          routingComponents.addTeams.bind(routingComponents)
+          this.upload.array("docs" , 1),
+          routingComponents.countriesImage.bind(routingComponents)
         ]
 
       },
-      
-     
 
       // 404
       {

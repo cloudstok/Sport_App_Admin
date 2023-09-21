@@ -1,4 +1,3 @@
-import { Option } from "aws-sdk/clients/rds";
 import { appConfig } from "../../config/appConf";
 const request = require('request');
 
@@ -14,7 +13,7 @@ let  options = {
   })
 
 };
-export class tournament{
+export class cricketApi{
     //========================================  Association Endpoints ==================================
    async resultPromise(option){
     return new Promise((resolve, reject)=> {
@@ -42,8 +41,8 @@ export class tournament{
   }
 
 
-  async Featured_Tournaments(association_key){
-      options.url = `https://api.sports.roanuz.com/v5/cricket/${appConfig.PROJECT_KEY}/association/${association_key}/featured-tournaments/`;
+  async Featured_Tournaments(){
+      options.url = `https://api.sports.roanuz.com/v5/cricket/${appConfig.PROJECT_KEY}/featured-tournaments/`;
       return await this.resultPromise(options)
   }
 

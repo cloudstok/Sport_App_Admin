@@ -7,6 +7,6 @@ export const SQL_ADD_REELS : string = `insert into reels(url) values (?)`;
 export const SQL_SHOW_REELS : string = `select * from reels where is_deleted = 0`;
 export const SQL_INSERT_NEWS: string = `INSERT INTO news (heading, sub_heading, cover_image, created_by, url, content) values(?,?,?,?,?,?)`;
 export const SQL_SHOW_NEWS: string = `SELECT * from news where is_deleted = 0`;
-export const SQL_UPDATE_NEWS: string = `UPDATE table news SET ? where news_id = ?`;
+export const SQL_UPDATE_NEWS: string = `UPDATE  news SET ? where news_id = ?`;
 export const SQL_DELETE_NEWS:string = `DELETE from news where news_id = ?`;
 export const SQL_SHOW_NEWS_BY_ID : string = `SELECT * from news where news_id = ? and is_deleted = 0`
