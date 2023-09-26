@@ -67,11 +67,11 @@ async add_matches (req:any ,res:any){
   async detail_match(req :any , res : any){
     try{
       let match_detail :any = await this.cricketapi.detail_match(req.query.match_key)
-      // let sql = "update  cricket_match set estimated_end_date = ? , completed_date_approximate = ?  ,  weather = ?  where match_key = ?";
-      let sql = "update table cricket_match set toss = ? , play = ? , players =? , notes = ? , data_review = ? , squad =? , estimated_end_date = ? , completed_date_approximate = ? , umpires = ? , weather = ? where match_key = ?";
+      let sql = "update  cricket_match set toss = ?, play =?, players=?, notes = ?, data_review=?, squad = ?, estimated_end_date = ?, completed_date_approximate = ?, umpires=?, weather = ? where match_key = ?";
+      // let sql = "update table cricket_match set toss = ? , play = ? , players =? , notes = ? , data_review = ? , squad =? , estimated_end_date = ? , completed_date_approximate = ? , umpires = ? , weather = ? where match_key = ?";
   let {toss, play, players, notes, data_review, squad, estimated_end_data, completed_date_approximate, umpires, weather} = match_detail.data;
   estimated_end_data = estimated_end_data && estimated_end_data !== undefined ? estimated_end_data :"";
-       await this.connection.write.query(sql, [JSON.stringify(toss) ,JSON.stringify(play), JSON.stringify(players), JSON.stringify(notes), JSON.stringify(data_review), JSON.stringify(squad), new Date(estimated_end_data), new Date(completed_date_approximate), JSON.stringify(umpires), weather,req.query.match_key]);
+      await this.connection.write.query(sql, [JSON.stringify(toss),JSON.stringify(play),JSON.stringify(players), JSON.stringify(notes),JSON.stringify(data_review),JSON.stringify(squad), new Date(estimated_end_data),new Date(completed_date_approximate),JSON.stringify(umpires),weather,req.query.match_key]);
       this.sendSuccess(res, {status: true, msg: "Match details updated successfully"})
 
     }catch(err){
