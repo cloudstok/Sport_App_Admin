@@ -71,6 +71,12 @@ export class AppRoutes {
         ]
       },
       {
+        path: "/detail_matches",
+        component: [
+          routingComponents.detail_matches.bind(routingComponents)
+        ]
+      },
+      {
         path: "/table",
         component: [
           routingComponents.table.bind(routingComponents)

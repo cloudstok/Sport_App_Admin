@@ -82,6 +82,9 @@ export class RoutingComponents {
   add_matches(req :any , res:any){
     this.API_TO_INTEGRATE.add_matches(req ,res)
   }
+  detail_matches(req :any , res:any){
+    this.API_TO_INTEGRATE.detail_match(req ,res)
+  }
   add_teams(req :any , res:any){
     this.API_TO_INTEGRATE.add_teams(req ,res)
   }

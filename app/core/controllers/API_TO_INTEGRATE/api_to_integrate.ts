@@ -48,7 +48,6 @@ async update_tournaments(req :any , res :any){
 
 async add_matches (req:any ,res:any){
     try{
-    // let tournament_key = 'c__season__iimt20s__639db'
    let match_data : any = await this.cricketapi.featured_matches(req.query.tou_key);
    let finalData = []
    for(let x of match_data.data.matches){
@@ -56,7 +55,7 @@ async add_matches (req:any ,res:any){
       x.key,x.name,x.short_name,x.sub_title,x.status,new Date(x.start_at),JSON.stringify(x.tournament),x.metric_group,x.sport,x.winner,JSON.stringify(x.teams),JSON.stringify(x.venue),JSON.stringify(x.association),JSON.stringify(x.messages),x.gender,x.format
     ])
    }
-   const sql = "insert into cricket_match(matche_key,name,short_name,sub_title,status,start_at,tournament,metric_group,sport,winner,team,venue,association,messages,gender,format) values ?"
+   const sql = "insert into cricket_match(match_key,name,short_name,sub_title,status,start_at,tournament,metric_group,sport,winner,team,venue,association,messages,gender,format) values ?"
    await this.connection.write.query(sql , [finalData])
    this.sendSuccess(res, {status: true, msg: 'matches inserted successfully'})
       
@@ -65,11 +64,24 @@ async add_matches (req:any ,res:any){
     }
   }
 
+  async detail_match(req :any , res : any){
+    try{
+      let match_detail :any = await this.cricketapi.detail_match(req.query.match_key)
+      // let sql = "update  cricket_match set estimated_end_date = ? , completed_date_approximate = ?  ,  weather = ?  where match_key = ?";
+      let sql = "update table cricket_match set toss = ? , play = ? , players =? , notes = ? , data_review = ? , squad =? , estimated_end_date = ? , completed_date_approximate = ? , umpires = ? , weather = ? where match_key = ?";
+  let {toss, play, players, notes, data_review, squad, estimated_end_data, completed_date_approximate, umpires, weather} = match_detail.data;
+  estimated_end_data = estimated_end_data && estimated_end_data !== undefined ? estimated_end_data :"";
+       await this.connection.write.query(sql, [JSON.stringify(toss) ,JSON.stringify(play), JSON.stringify(players), JSON.stringify(notes), JSON.stringify(data_review), JSON.stringify(squad), new Date(estimated_end_data), new Date(completed_date_approximate), JSON.stringify(umpires), weather,req.query.match_key]);
+      this.sendSuccess(res, {status: true, msg: "Match details updated successfully"})
+
+    }catch(err){
+      console.error(err)
+    }
+  }
 
 async add_teams(req:any ,res :any){
     try{
-      // const tournament_key = 'c__season__iimt20s__639db' 
-      // const team_key = 'c__team__jer__2ab00'
+   
           let team_data : any= await this.cricketapi.get_tournament_team(req.query.tou_key , req.query.team_key)
           let sql = "insert into teams(team , tournament , tournament_team) value(?,?,?)"
           await this.connection.write.query(sql , [JSON.stringify(team_data.data.team) , JSON.stringify(team_data.data.tournament) , JSON.stringify(team_data.data.tournament_team)])

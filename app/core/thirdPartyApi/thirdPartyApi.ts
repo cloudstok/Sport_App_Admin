@@ -147,7 +147,7 @@ async get_matches_list(){
   }
 }
 
-async get_match(key){
+async detail_match(key){
   try{
     options.url = `https://api.sports.roanuz.com/v5/cricket/${appConfig.PROJECT_KEY}/match/${key}/`;
     return await this.resultPromise(options)
