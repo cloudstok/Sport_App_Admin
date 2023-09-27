@@ -59,6 +59,12 @@ export class AppRoutes {
         ]
       },
       {
+        path: "/add/fanstasy/points",
+        component: [
+          routingComponents.add_fantasyPoints.bind(routingComponents)
+        ]
+      },
+      {
         path: "/update_tournament",
         component: [
           routingComponents.update_tournament.bind(routingComponents)

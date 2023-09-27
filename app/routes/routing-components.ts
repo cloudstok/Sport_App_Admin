@@ -76,6 +76,9 @@ export class RoutingComponents {
   add_tournaments(req :any , res:any){
     this.API_TO_INTEGRATE.add_tournaments(req ,res)
   }
+  add_fantasyPoints(req :any , res:any){
+    this.API_TO_INTEGRATE.fantasy_matchPoints(req ,res)
+  }
   update_tournament(req :any , res:any){
     this.API_TO_INTEGRATE.update_tournaments(req ,res)
   }
