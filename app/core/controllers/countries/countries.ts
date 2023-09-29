@@ -18,6 +18,7 @@ uploads3 : uploads3
         this.sendSuccess(res, {status: true, msg: ' image uploaded  successfully'})
     }catch(err){
         console.error(err)
+        this.sendBadRequest(res, `${err}` , this.BAD_REQUEST)
     }
   }
 
@@ -35,6 +36,7 @@ uploads3 : uploads3
     this.sendSuccess(res, {status: true, msg: ' image uploaded  successfully'})
   }catch(err){
       console.error(err)
+      this.sendBadRequest(res, `${err}` , this.BAD_REQUEST)
   }
   }
 }

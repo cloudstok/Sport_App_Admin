@@ -33,6 +33,7 @@ export class API_TO_INTEGRATE extends ResponseInterceptor {
       this.sendSuccess(res, { status: true, msg: 'tournaments inserted successfully' })
     } catch (err) {
       console.error(err)
+      this.sendBadRequest(res, `${err}` , this.BAD_REQUEST)
 
     }
   }
@@ -44,6 +45,7 @@ export class API_TO_INTEGRATE extends ResponseInterceptor {
       this.sendSuccess(res, { status: true, msg: 'tournaments detail inserted successfully' })
     } catch (err) {
       console.error(err)
+      this.sendBadRequest(res, `${err}` , this.BAD_REQUEST)
     }
   }
 
@@ -65,19 +67,21 @@ export class API_TO_INTEGRATE extends ResponseInterceptor {
 
     } catch (err) {
       console.error(err)
+      this.sendBadRequest(res, `${err}` , this.BAD_REQUEST)
     }
   }
 
   async detail_match(req: any, res: any) {
     try {
-      let match_detail: any = await this.cricketapi.detail_match(req.query.match_key)
-      let { toss, play, players, notes, data_review, squad, estimated_end_data, completed_date_approximate, umpires, weather } = match_detail.data;
-      estimated_end_data = estimated_end_data && estimated_end_data !== undefined ? estimated_end_data : "";
-      await this.connection.write.query(detail_match, [JSON.stringify(toss), JSON.stringify(play), JSON.stringify(players), JSON.stringify(notes), JSON.stringify(data_review), JSON.stringify(squad), new Date(estimated_end_data), new Date(completed_date_approximate), JSON.stringify(umpires), weather, req.query.match_key]);
+      let match_detail :any = await this.cricketapi.detail_match(req.query.match_key);
+      let { toss, play, players, notes, data_review, squad, estimated_end_date, completed_date_approximate, umpires, weather } = match_detail.data;
+      estimated_end_date = estimated_end_date && estimated_end_date !== undefined ? estimated_end_date : 0;
+      await this.connection.write.query(detail_match, [JSON.stringify(toss), JSON.stringify(play), JSON.stringify(players), JSON.stringify(notes), JSON.stringify(data_review), JSON.stringify(squad), new Date(estimated_end_date * 1000), new Date(completed_date_approximate), JSON.stringify(umpires), weather, req.query.match_key]);
       this.sendSuccess(res, { status: true, msg: "Match details updated successfully" })
 
     } catch (err) {
       console.error(err)
+      this.sendBadRequest(res, `${err}` , this.BAD_REQUEST)
     }
   }
 
@@ -89,6 +93,7 @@ export class API_TO_INTEGRATE extends ResponseInterceptor {
       this.sendSuccess(res, { status: true, msg: 'matches inserted successfully' })
     } catch (err) {
       console.error(err)
+      this.sendBadRequest(res, `${err}` , this.BAD_REQUEST)
     }
   }
 
@@ -101,6 +106,7 @@ export class API_TO_INTEGRATE extends ResponseInterceptor {
 
     } catch (err) {
       console.error(err)
+      this.sendBadRequest(res, `${err}` , this.BAD_REQUEST)
     }
   }
 
@@ -108,17 +114,19 @@ export class API_TO_INTEGRATE extends ResponseInterceptor {
     try {
       let fantasy: any = await this.cricketapi.get_fantasy_matchPoints(req.query.match_key);
       let {match, overrides, metrics, players, teams, last_updated, points} = fantasy.data;
-      // let sql = `INSERT IGNORE INTO fantasy_points(match, overrides, metrics, players, teams, last_updated, points) values(?,?,?,?,?,?,?)`;
-      let sql = "INSERT IGNORE INTO fantasy_points(match) values(?)";
-      
-      // overrides = overrides? overrides : {}
-      // await this.connection.write.query(sql, [match, overrides, metrics, players, teams, last_updated, points]);
-      await this.connection.write.query(sql, [match]);
+      const fantasy_sql = "INSERT IGNORE INTO fantasy( match_key , overrides, metrics, players, teams, last_updated) values( ?,?,?,?,?,?)";
+      const point_sql = "INSERT IGNORE INTO fantasy_points( match_key , ranks, points, player_key, points_str, last_updated , tournament_points , points_breakup) values ?"
+      let b = points.map(e=>([req.query.match_key,e.rank,e.points,e.player_key, e.points_str, new Date(e.last_updated),  e.tournament_points, JSON.stringify(e.points_breakup)]))
+      overrides = overrides? overrides : {}
+      await this.connection.write.query(point_sql , [b])
+      await this.connection.write.query(fantasy_sql, [req.query.match_key ,JSON.stringify(overrides) ,JSON.stringify(metrics), JSON.stringify(players), JSON.stringify(teams), new Date(last_updated)]);
       this.sendSuccess(res, {status: true, msg: "Fantasy points data inserted successfully"});
     } catch (err) {
       console.error(err)
+      this.sendBadRequest(res, `${err}` , this.BAD_REQUEST)
     }
   }
 
 }
+
 
