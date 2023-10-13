@@ -7,7 +7,8 @@ import {static_data} from '../core/controllers/Static_Data/static_data'
 import { teamController } from "../core/controllers/teamController";
 import { API_TO_INTEGRATE} from '../core/controllers/API_TO_INTEGRATE/api_to_integrate'
 import { countries } from "../core/controllers/countries/countries";
-
+import { tournament } from "../core/controllers/tournament/tournamentController";
+import { playerController } from "../core/controllers/playerController";
 export class RoutingComponents {
   responseInterceptor: ResponseInterceptor;
   test: TestController
@@ -18,7 +19,8 @@ export class RoutingComponents {
   teamController : teamController
   API_TO_INTEGRATE :API_TO_INTEGRATE
   countries : countries
-  
+  tournament : tournament
+  player: playerController
 
   constructor() {
     this.responseInterceptor = new ResponseInterceptor();
@@ -30,6 +32,8 @@ export class RoutingComponents {
     this.teamController = new teamController();
     this.API_TO_INTEGRATE = new API_TO_INTEGRATE();
     this.countries = new countries()
+    this.tournament = new tournament()
+    this.player = new playerController();
   }
 
   /**
@@ -73,8 +77,17 @@ export class RoutingComponents {
   countriesImage(req :any , res:any){
     this.countries.uploadImage(req ,res)
   }
+  playerImage(req :any , res:any){
+    this.player.addplayerImage(req ,res)
+  }
+  tournamentImage(req :any , res:any){
+    this.tournament.addImageTournament(req ,res)
+  }
   add_tournaments(req :any , res:any){
     this.API_TO_INTEGRATE.add_tournaments(req ,res)
+  }
+  add_tournaments_stats(req :any , res:any){
+    this.player.addStats(req ,res)
   }
   add_fantasyPoints(req :any , res:any){
     this.API_TO_INTEGRATE.fantasy_matchPoints(req ,res)
@@ -82,8 +95,14 @@ export class RoutingComponents {
   update_tournament(req :any , res:any){
     this.API_TO_INTEGRATE.update_tournaments(req ,res)
   }
+  tournament_point(req :any , res:any){
+    this.API_TO_INTEGRATE.tournaments_point_table(req ,res)
+  }
   add_matches(req :any , res:any){
     this.API_TO_INTEGRATE.add_matches(req ,res)
+  }
+  update_matches(req :any , res:any){
+    this.API_TO_INTEGRATE.update_matches(req ,res)
   }
   detail_matches(req :any , res:any){
     this.API_TO_INTEGRATE.detail_match(req ,res)
@@ -117,7 +136,7 @@ export class RoutingComponents {
   }
 
   updateNews(req:any, res: any){
-    this.news,this.updateNews(req,res)
+    this.news.updateNews(req,res)
   }
 
   deleteNews(req:any, res:any){

@@ -1,4 +1,4 @@
- export default interface RootObject {
+ export default interface liveMatchOdd {
   data: Data;
   cache: Cache;
   schema: Schema;

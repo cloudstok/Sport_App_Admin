@@ -32,7 +32,7 @@ export class News extends ResponseInterceptor{
         try{
             console.log(req.files)
             if(req.files.length > 0){
-             req.body.cover_image = await  this.uploads3.uploadImage(req.files)}
+             req.body.cover_image = (await  this.uploads3.uploadImage(req.files)).Location}
             const {heading, sub_heading, cover_image, created_by, url, content} = req.body;
           await this.connection.write.query(SQL_INSERT_NEWS, [heading, sub_heading, cover_image, created_by, url, content]);
             this.sendSuccess(res, { msg: "News added successfully"})
@@ -45,6 +45,10 @@ export class News extends ResponseInterceptor{
     async updateNews(req: any, res: any){
         try{
             const reqBody = req.body;
+            if(req.body.description)
+            {
+                req.body.description = JSON.stringify(req.body.description)
+            }
             const [news] = await this.connection.write.query(SQL_UPDATE_NEWS, [reqBody, req.params.news_id]);
             this.sendSuccess(res, { msg: "News updated successfully", data: news})
         }catch(err){

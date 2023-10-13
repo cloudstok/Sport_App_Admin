@@ -6,6 +6,7 @@ import FeaturedTournaments from "interfaces/apiRequest/featured_tournamentInterf
 import association from "interfaces/apiRequest/associationInterface";
 import countries from "interfaces/apiRequest/countriesInterface";
 import liveMatchOdd from "interfaces/apiRequest/liveMatchOddInterface";
+import statsInterface from "interfaces/apiRequest/statsInterface";
 
 let  options = {
   'method': 'GET',
@@ -61,8 +62,9 @@ export class cricketApi{
   }
 
 
-  async Featured_Tournaments() : Promise <FeaturedTournaments>{
-      options.url = `https://api.sports.roanuz.com/v5/cricket/${appConfig.PROJECT_KEY}/featured-tournaments/`;
+  async Featured_Tournaments(Association) : Promise <FeaturedTournaments>{
+      options.url = `https://api.sports.roanuz.com/v5/cricket/${appConfig.PROJECT_KEY}/association/${Association}/featured-tournaments/`;
+      // options.url = `https://api.sports.roanuz.com/v5/cricket/${appConfig.PROJECT_KEY}/featured-tournaments/`;
       return (await this.fetchDataFromSource(options)) as FeaturedTournaments
   }
 
@@ -81,7 +83,7 @@ export class cricketApi{
     return await this.fetchDataFromSource(options)
  }
 
- //============================================================================================= Tournament Endpoints ===============================
+ //========================================= Tournament Endpoints ===============================
 
  async Featured(){
   try{
@@ -219,7 +221,7 @@ async get_fantasy_matchPoints(matchKey){
 async get_tournament_stats(tournamentKey){
   try{
     options.url =  `https://api.sports.roanuz.com/v5/cricket/${appConfig.PROJECT_KEY}/tournament/${tournamentKey}/stats/`;
-    return await this.fetchDataFromSource(options)
+    return (await this.fetchDataFromSource(options)) as statsInterface
   }catch(err){
     console.error(err)
   }

@@ -59,6 +59,12 @@ export class AppRoutes {
         ]
       },
       {
+        path: "/tournaments/stats/:tou_key",
+        component: [
+          routingComponents.add_tournaments_stats.bind(routingComponents)
+        ]
+      },
+      {
         path: "/add/fanstasy/points",
         component: [
           routingComponents.add_fantasyPoints.bind(routingComponents)
@@ -71,9 +77,21 @@ export class AppRoutes {
         ]
       },
       {
+        path: "/tournament_point",
+        component: [
+          routingComponents.tournament_point.bind(routingComponents)
+        ]
+      },
+      {
         path: "/add_matches",
         component: [
           routingComponents.add_matches.bind(routingComponents)
+        ]
+      },
+      {
+        path: "/update_matches",
+        component: [
+          routingComponents.update_matches.bind(routingComponents)
         ]
       },
       {
@@ -121,6 +139,22 @@ export class AppRoutes {
         component: [
           this.upload.array("docs" , 1),
           routingComponents.countriesImage.bind(routingComponents)
+        ]
+
+      },
+      {
+        path: "/playerImage",
+        component: [
+          this.upload.array("docs" , 1),
+          routingComponents.playerImage.bind(routingComponents)
+        ]
+
+      },
+      {
+        path: "/tournamentImage",
+        component: [
+          this.upload.array("docs" , 1),
+          routingComponents.tournamentImage.bind(routingComponents)
         ]
 
       },
@@ -202,7 +236,7 @@ export class AppRoutes {
         ]
       },
       {
-        path: "/updateNews",
+        path: "/updateNews/:news_id",
         component: [
           routingComponents.updateNews.bind(routingComponents)
         ]
