@@ -30,8 +30,8 @@ uploads3 : uploads3
         let imageUrl = await this.uploads3.uploadImage(req.files)
         url = imageUrl.Location
     }
-     console.log(url , "image")
-    const sql = "UPDATE  countries SET imgURls = ?  where code = ?"
+    //  console.log(url , "image")
+    const sql = "UPDATE  countries SET imgURl = ?  where code = ?"
     await this.connection.write.query(sql , [url , req.query.code])
     this.sendSuccess(res, {status: true, msg: ' image uploaded  successfully'})
   }catch(err){
