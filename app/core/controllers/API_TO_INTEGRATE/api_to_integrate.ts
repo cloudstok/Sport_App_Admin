@@ -14,7 +14,7 @@ const update_table = "update  result_table set rounds= ? where tou_key =?"
 const update_match = "UPDATE cricket_match SET name = ?,short_name = ?,sub_title =?,status =?,start_at =?,tou_key =?,tou_name = ?,tou_short_name = ?, metric_group = ?,sport = ?,winner = ?,team = ?,venue = ?,association = ?,messages = ?,gender = ?,format = ?  where match_key = ?"
 export class API_TO_INTEGRATE extends ResponseInterceptor {
   connection: connection;
-  cricketapi: cricketApi;
+  cricketapi: cricketApi;z
   commonFunction: commonFunctions;
   constructor() {
     super();
@@ -53,7 +53,7 @@ export class API_TO_INTEGRATE extends ResponseInterceptor {
   async tournaments_point_table(req: any, res: any) {
     try {
       let detail_tournament: any = await this.cricketapi.get_tournament_tables(req.query.tou_key)
-      await this.connection.write.query("update tournament set tou_points = ? where tou_key = ?", [JSON.stringify(detail_tournament.data.rounds), req.query.tou_key])
+      await this.connection.write.query("update tournament set tou_points = ? where tou_key = ?", [JSON.stringify(detail_tournament?.data?.rounds), req.query.tou_key])
       this.sendSuccess(res, { status: true, msg: 'tournaments detail inserted successfully' })
     } catch (err) {
       console.error(err)
@@ -68,9 +68,10 @@ export class API_TO_INTEGRATE extends ResponseInterceptor {
     try {
       let match_data: any = await this.cricketapi.featured_matches(req.query.tou_key);
       let finalData = []
-      for (let x of match_data.data.matches) {
+      // if(match_data?.data && match_data?.data?.matches){}
+      for (let x of match_data?.data?.matches) {
         finalData.push([
-          x.key, x.name, x.short_name, x.sub_title, x.status, await this.commonFunction.convertDateFormat(x.start_at * 1000), x.tournament.key, x.tournament.name, x.tournament.short_name, x.metric_group, x.sport, x.winner, JSON.stringify(x.teams), JSON.stringify(x.venue), JSON.stringify(x.association), JSON.stringify(x.messages), x.gender, x.format
+          x.key, x.name, x.short_name, x.sub_title, x.status, new Date(x.start_at * 1000), x.tournament.key, x.tournament.name, x.tournament.short_name, x.metric_group, x.sport, x.winner, JSON.stringify(x.teams), JSON.stringify(x.venue), JSON.stringify(x.association), JSON.stringify(x.messages), x.gender, x.format
         ])
       }
       await this.connection.write.query(add_matches, [finalData])
@@ -87,7 +88,7 @@ export class API_TO_INTEGRATE extends ResponseInterceptor {
       // let finalData = []
       for (let x of match_data.data?.matches) {
         let finalData = [
-          x.name, x.short_name, x.sub_title, x.status, await this.commonFunction.convertDateFormat(x.start_at * 1000), x.tournament.key, x.tournament.name, x.tournament.short_name, x.metric_group, x.sport, x.winner, JSON.stringify(x.teams), JSON.stringify(x.venue), JSON.stringify(x.association), JSON.stringify(x.messages), x.gender, x.format, x.key
+          x.name, x.short_name, x.sub_title, x.status, new Date(x.start_at * 1000), x.tournament.key, x.tournament.name, x.tournament.short_name, x.metric_group, x.sport, x.winner, JSON.stringify(x.teams), JSON.stringify(x.venue), JSON.stringify(x.association), JSON.stringify(x.messages), x.gender, x.format, x.key
         ]
         await this.connection.write.query(update_match, finalData)
       }
