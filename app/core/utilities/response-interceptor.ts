@@ -48,7 +48,7 @@ export class ResponseInterceptor {
         let responseBody = {
             version : appConfig.ver,
             timeSamp: new Date(), 
-            status:  status + " fail",
+            status:  false,
             errCode: this.BAD_MESSAGE,
             errMsg: message ? message : 'Bad Request',
         }

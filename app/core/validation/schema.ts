@@ -1,12 +1,12 @@
 import * as Joi from 'joi'
 import { validData } from './validData';
     export const register = Joi.object().keys({
-        admin_id: validData.alphaNum,
-        password: validData.alphaNum,
+      phone: validData.number,
+      password: validData.alphaNum,
       });
 
       export const findbyid = Joi.object().keys({
-        a_id : validData.number
+        phone : validData.number
       })
 
 

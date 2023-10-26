@@ -20,18 +20,18 @@ export class AppRoutes {
       this .upload = upload
     /* Post calls */
     this.AppPostRoutes = [
-      //DEPOSIT
-      {
-        path: "/test",
-        component: [
-          routingComponents.testAPI.bind(routingComponents)
-        ]
-      },
       {
         path: "/register",
         component: [
           this.apiValidation.validate(register),
           routingComponents.register.bind(routingComponents)
+        ]
+      },
+      {
+        path: "/login",
+        component: [
+          this.apiValidation.validate(register),
+          routingComponents.login.bind(routingComponents)
         ]
       },
       {
@@ -112,13 +112,7 @@ export class AppRoutes {
           routingComponents.add_teams.bind(routingComponents)
         ]
       },
-      {
-        path: "/login",
-        component: [
-          this.apiValidation.validate(register),
-          routingComponents.login.bind(routingComponents)
-        ]
-      },
+  
       {
         path: "/addReel",
         component: [
@@ -174,13 +168,19 @@ export class AppRoutes {
     this.AppGetRoutes = [
       // 404
       {
+        path: "/test",
+        component: [
+          routingComponents.testAPI.bind(routingComponents)
+        ]
+      },
+      {
         path: "/alladmin",
         component: [
           routingComponents.findAllAdmin.bind(routingComponents)
         ]
       },
       {
-        path: "/findbyid/:a_id",
+        path: "/findbyid/:phone",
         component: [
           this.apiValidation.validateParams(findbyid),
           routingComponents.userFindById.bind(routingComponents)
@@ -224,13 +224,13 @@ export class AppRoutes {
     this.AppUpdateRoutes = [
       // 404
       {
-        path: "/updateuser/:a_id",
+        path: "/updateuser/:phone",
         component: [
           routingComponents.updateAdmin.bind(routingComponents)
         ]
       },
       {
-        path: "/deleteuser/:a_id",
+        path: "/deleteuser/:phone",
         component: [
           routingComponents.deleteAdmin.bind(routingComponents)
         ]

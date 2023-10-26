@@ -15,13 +15,13 @@ export class admin extends ResponseInterceptor {
     }
     async register(req: any, res: any) {
         try {
-            const { admin_id, password } = req.body
-            const [user]: any = await this.connection.write.query(SQL_CHECK_ADMIN, [admin_id]);
+            const { phone, password } = req.body
+            const [user]: any = await this.connection.write.query(SQL_CHECK_ADMIN, [phone]);
             if (user.length > 0) {
                 return this.sendBadRequest(res,  "User Already Exist" , this.BAD_REQUEST)
             }
             const hash = await this.encryptionDecryption.Encryption(password)
-            await this.connection.write.query(SQL_INSERT_ADMIN, [admin_id, hash]);
+            await this.connection.write.query(SQL_INSERT_ADMIN, [phone, hash]);
             return this.sendSuccess(res, { message: "admin Insert Successfully" })
         }
         catch (err) {
@@ -33,8 +33,8 @@ export class admin extends ResponseInterceptor {
 
     async login(req: any, res: any) {
         try {
-            const { admin_id, password } = req.body
-            const [user]: any = await this.connection.write.query(SQL_CHECK_ADMIN, [admin_id]);
+            const { phone, password } = req.body
+            const [user]: any = await this.connection.write.query(SQL_CHECK_ADMIN, [phone]);
             if (user.length === 0) {
                 return this.sendBadRequest(res, "You are not register" , this.BAD_REQUEST)
             }
@@ -62,9 +62,8 @@ export class admin extends ResponseInterceptor {
 
    async updateAllAdmin(req : any, res : any){
     try{
-        const { admin_id, password } = req.body
-        let a_Id = req.params.a_id
-        const [user]: any = await this.connection.write.query(SQL_UPDATE_ADMIN, [admin_id, password, a_Id]);
+        const { phone, password } = req.body
+        const [user]: any = await this.connection.write.query(SQL_UPDATE_ADMIN, [ password , phone]);
         return this.sendSuccess(res, { message: "User updated Successfully", data : user })
     }
     catch(err){
@@ -74,7 +73,7 @@ export class admin extends ResponseInterceptor {
 
    async DeleteAdmin(req : any, res : any){
     try{
-        const [user]: any = await this.connection.write.query(SQL_DELETE_ADMIN, [req.params.a_id]);
+        const [user]: any = await this.connection.write.query(SQL_DELETE_ADMIN, [req.params.phone]);
         return this.sendSuccess(res, { message: "User delete Successfully", data : user })
     }
     catch(err){
@@ -84,7 +83,7 @@ export class admin extends ResponseInterceptor {
    }
    async findById(req : any, res : any){
     try{
-        const [user]: any = await this.connection.write.query(SQL_CHECK_ADMIN, [req.params.a_id]);
+        const [user]: any = await this.connection.write.query(SQL_CHECK_ADMIN, [req.params.phone]);
         return this.sendSuccess(res, {  data : user })
     }
     catch(err){

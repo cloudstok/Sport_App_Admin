@@ -14,13 +14,14 @@ cricketApi : cricketApi
   }
 
   async test(req :any, res :any) {
-    // let data = await this.cricketApi.list_tournament("zat10_2023")
+    console.log(req)
+  //   let data = await this.cricketApi.list_tournament("zat10_2023")
   
   //   console.log(data)
 
   //  res.send(data)
 
-    // return this.sendResponse(res, 200, { data: "Hello World"})
+  //   return this.sendResponse(res, 200, { data: "Hello World"})
 
   }
 
