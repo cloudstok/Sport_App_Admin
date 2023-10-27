@@ -9,6 +9,7 @@ import { API_TO_INTEGRATE} from '../core/controllers/API_TO_INTEGRATE/api_to_int
 import { countries } from "../core/controllers/countries/countries";
 import { tournament } from "../core/controllers/tournament/tournamentController";
 import { playerController } from "../core/controllers/playerController";
+import {user} from '../core/controllers/userController'
 export class RoutingComponents {
   responseInterceptor: ResponseInterceptor;
   test: TestController
@@ -17,6 +18,7 @@ export class RoutingComponents {
   news : News
   static_data :static_data
   teamController : teamController
+  user :user
   API_TO_INTEGRATE :API_TO_INTEGRATE
   countries : countries
   tournament : tournament
@@ -34,6 +36,7 @@ export class RoutingComponents {
     this.countries = new countries()
     this.tournament = new tournament()
     this.player = new playerController();
+    this.user = new user()
   }
 
   /**
@@ -54,8 +57,20 @@ export class RoutingComponents {
   findAllAdmin(req: any, res : any){
     this.admin.findAllAdmin(req, res)
   }
+  findUser(req: any, res : any){
+    this.user.findAllUsers(req, res)
+  }
+  findUserByid(req: any, res : any){
+    this.user.findById(req, res)
+  }
   updateAdmin(req:any, res :any){
     this.admin.updateAllAdmin(req, res)
+  }
+  updateUser(req:any, res :any){
+    this.user.updateAllUser(req, res)
+  }
+  deleteUser(req:any, res :any){
+    this.user.DeleteUser(req, res)
   }
   deleteAdmin(req:any, res :any){
     this.admin.DeleteAdmin(req, res)

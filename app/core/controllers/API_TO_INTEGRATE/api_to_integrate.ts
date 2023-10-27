@@ -5,6 +5,7 @@ import { cricketApi } from "../../thirdPartyApi/thirdPartyApi";
 import { commonFunctions } from "../../utilities/common-functions.bin";
 
 const add_tournaments = "insert IGNORE into tournament(tou_key ,name , short_name , countries , start_date , gender , point_system ,competition , association_key , metric_group , sport , is_date_confirmed , is_venue_confirmed , last_scheduled_match_date ,formats ) VALUEs ?"
+const update_tournament = "update tournament set name = ? , short_name = ?, countries = ?, start_date = ? , gender= ? , point_system =?,competition =? , metric_group = ?, sport = ?  , is_date_confirmed = ?, is_venue_confirmed = ?, last_scheduled_match_date= ? ,formats= ? where tou_key = ? "
 const update_tournaments = "update tournament set teams = ? , rounds = ? where tou_key = ? "
 const add_matches = "insert ignore into cricket_match(match_key,name,short_name,sub_title,status,start_at,tou_key,tou_name,tou_short_name,metric_group,sport,winner,team,venue,association,messages,gender,format) values ?"
 const detail_match = "update  cricket_match set toss = ?, play =?, players=?, notes = ?, data_review=?, squad = ?, estimated_end_date = ?, completed_date_approximate = ?, umpires=?, weather = ? where match_key = ?";
@@ -22,23 +23,47 @@ export class API_TO_INTEGRATE extends ResponseInterceptor {
     this.cricketapi = new cricketApi();
     this.commonFunction = new commonFunctions();
   }
+
+
+//  add tournament / update tournament with association key 
+
   async add_tournaments(req: any, res: any) {
     try {
       let result: any = await this.cricketapi.Featured_Tournaments(req.query.ass_key);
       let finalData = []
+      let updateDate = []
       for (let x of result?.data?.tournaments) {
-        finalData.push([
-          x.key, x.name, x?.short_name ?? "", x?.countries[0]?.code, new Date(x.start_date * 1000), x.gender, x.point_system, JSON.stringify(x?.competition ?? {}), x.association_key, x.metric_group, x.sport, x.is_date_confirmed, x.is_venue_confirmed, new Date(x.last_scheduled_match_date * 1000), JSON.stringify(x.formats)
-        ])
-      }
-      await this.connection.write.query(add_tournaments, [finalData])
+        const [check] : any = await this.connection.write.query("SELECT * FROM sport_app.tournament where tou_key = ?" , [x.key])
+if(check.length > 0 ){
+  updateDate.push([
+    x.name, x?.short_name ?? "", x?.countries[0]?.code, new Date(x.start_date * 1000), x.gender, x.point_system, JSON.stringify(x?.competition ?? {}),  x.metric_group, x.sport, x.is_date_confirmed, x.is_venue_confirmed, new Date(x.last_scheduled_match_date * 1000), JSON.stringify(x.formats),  x.key,
+  ])  
+}else{
+  finalData.push([
+    x.key, x.name, x?.short_name ?? "", x?.countries[0]?.code, new Date(x.start_date * 1000), x.gender, x.point_system, JSON.stringify(x?.competition ?? {}), x.association_key, x.metric_group, x.sport, x.is_date_confirmed, x.is_venue_confirmed, new Date(x.last_scheduled_match_date * 1000), JSON.stringify(x.formats)
+  ])
+}  
+ }
+console.log(updateDate.length , "updateDate" , finalData.length , "finalData" )
+ if(updateDate.length  > 0 ){
+  for(let x of updateDate){
+    await this.connection.write.query(update_tournament, x)
+  }
+ }
+ if(finalData.length > 0){
+  await this.connection.write.query(add_tournaments, [finalData])
+ }
       this.sendSuccess(res, { status: true, msg: 'tournaments inserted successfully' })
     } catch (err) {
       console.error(err)
       this.sendBadRequest(res, `${err}`, this.BAD_REQUEST)
-
     }
   }
+
+
+//     update tournament whith tournament key
+
+
 
   async update_tournaments(req: any, res: any) {
     try {

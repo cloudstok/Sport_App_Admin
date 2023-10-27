@@ -180,6 +180,18 @@ export class AppRoutes {
         ]
       },
       {
+        path: "/findUser",
+        component: [
+          routingComponents.findUser.bind(routingComponents)
+        ]
+      },
+      {
+        path: "/findUserByid",
+        component: [
+          routingComponents.findUserByid.bind(routingComponents)
+        ]
+      },
+      {
         path: "/findbyid/:phone",
         component: [
           this.apiValidation.validateParams(findbyid),
